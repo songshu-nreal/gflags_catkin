@@ -8,9 +8,14 @@ include(ExternalProject)
 
 file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
+if(ANDROID_NREAL)
+    string(REPLACE "\"" "" TMP_BUILD_CONFIG ${ANDROID_NINEBOT_BUILD_CONFIG})
+    string(REPLACE " " ";" BUILD_CONFIG ${TMP_BUILD_CONFIG})
+endif()
+
 ExternalProject_Add(
   gflags_src
-  URL https://github.com/gflags/gflags/archive/v2.1.2.zip
+  URL file://${CMAKE_SOURCE_DIR}/v2.1.2.zip
   URL_MD5 5cb0a1b38740ed596edb7f86cd5b3bd8
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND cd ../gflags_src &&
