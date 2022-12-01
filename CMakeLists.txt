@@ -9,7 +9,7 @@ include(ExternalProject)
 file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
 if(ANDROID_NREAL)
-    string(REPLACE "\"" "" TMP_BUILD_CONFIG ${ANDROID_NINEBOT_BUILD_CONFIG})
+    string(REPLACE "\"" "" TMP_BUILD_CONFIG ${ANDROID_NREAL_BUILD_CONFIG})
     string(REPLACE " " ";" BUILD_CONFIG ${TMP_BUILD_CONFIG})
 endif()
 
@@ -24,13 +24,14 @@ ExternalProject_Add(
        -DBUILD_SHARED_LIBS:BOOL=true
        -DGFLAGS_NAMESPACE:STRING=google
        -DCMAKE_BUILD_TYPE:STRING=Release
+       ${BUILD_CONFIG}
   BUILD_COMMAND cd ../gflags_src && make -j 8
   INSTALL_COMMAND cd ../gflags_src && make install -j 8
 )
 
 cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
 add_dependencies(${PROJECT_NAME} gflags_src)
-target_link_libraries(${PROJECT_NAME} 
+target_link_libraries(${PROJECT_NAME}
   ${CATKIN_DEVEL_PREFIX}/lib/libgflags${CMAKE_SHARED_LIBRARY_SUFFIX})
 
 cs_install()
