@@ -21,7 +21,7 @@ ExternalProject_Add(
   CONFIGURE_COMMAND cd ../gflags_src &&
      cmake . 
        -DCMAKE_INSTALL_PREFIX:PATH=${CATKIN_DEVEL_PREFIX}
-       -DBUILD_SHARED_LIBS:BOOL=true
+       -DBUILD_SHARED_LIBS:BOOL=false
        -DGFLAGS_NAMESPACE:STRING=google
        -DCMAKE_BUILD_TYPE:STRING=Release
        ${BUILD_CONFIG}
@@ -32,7 +32,7 @@ ExternalProject_Add(
 cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
 add_dependencies(${PROJECT_NAME} gflags_src)
 target_link_libraries(${PROJECT_NAME}
-  ${CATKIN_DEVEL_PREFIX}/lib/libgflags${CMAKE_SHARED_LIBRARY_SUFFIX})
+  ${CATKIN_DEVEL_PREFIX}/lib/libgflags${CMAKE_STATIC_LIBRARY_SUFFIX})
 
 cs_install()
 
